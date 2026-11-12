@@ -1,6 +1,6 @@
 # Hyper Insurance
 
-A fictional automobile insurance management system built to demonstrate C# and .NET development through a practical insurance-policy workflow.
+An automotive insurance project for managing policies, coverage, underwriting, and premiums, inspired by the workflows of Guidewire PolicyCenter.
 
 ## Project Overview
 
