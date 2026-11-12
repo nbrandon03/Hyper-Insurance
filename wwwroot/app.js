@@ -478,6 +478,7 @@ byId("review-form").addEventListener("submit", async (event) => {
 
 byId("issue-form").addEventListener("submit", async (event) => {
   event.preventDefault();
+  const form = event.currentTarget;
   const applicationId = Number(byId("issue-application").value);
   if (!applicationId) {
     notify("Choose an approved application first.", "error");
@@ -491,7 +492,7 @@ byId("issue-form").addEventListener("submit", async (event) => {
       deductible: Number(card.querySelector('[data-term="deductible"]').value)
     };
   });
-  const button = event.currentTarget.querySelector('button[type="submit"]');
+  const button = form.querySelector('button[type="submit"]');
   button.disabled = true;
   try {
     const policy = await api(`/api/policies/issue/${applicationId}`, {
@@ -499,7 +500,7 @@ byId("issue-form").addEventListener("submit", async (event) => {
       body: JSON.stringify({ coverages })
     });
     notify(`Policy ${policy.policyNumber} issued successfully.`);
-    event.currentTarget.reset();
+    form.reset();
     renderPolicyOptions();
     await refreshAll();
     openPolicyModal(policy);
