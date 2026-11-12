@@ -1,0 +1,213 @@
+@Hyper_Insurance_HostAddress = http://localhost:5217
+@applicationId = 1
+@policyId = 1
+
+### Create a customer
+POST {{Hyper_Insurance_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "firstName": "Alex",
+  "lastName": "Driver",
+  "email": "alex.driver@example.com",
+  "yearsLicensed": 10,
+  "previousAccidents": 0,
+  "trafficViolations": 0
+}
+
+### Create and classify a vehicle
+POST {{Hyper_Insurance_HostAddress}}/api/vehicles/classify
+Content-Type: application/json
+
+{
+  "make": "Example",
+  "model": "Sedan",
+  "year": 2024,
+  "value": 32000,
+  "horsepower": 180
+}
+
+### Submit an insurance application
+POST {{Hyper_Insurance_HostAddress}}/api/applications
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "vehicleId": 1,
+  "usage": "Personal",
+  "annualMileage": 12000,
+  "storageType": "Garage"
+}
+
+### Get a centralized premium quote
+GET {{Hyper_Insurance_HostAddress}}/api/rating/quote/{{applicationId}}
+Accept: application/json
+
+### Evaluate underwriting (repeating this updates the existing evaluation)
+POST {{Hyper_Insurance_HostAddress}}/api/underwriting/evaluate/{{applicationId}}
+Accept: application/json
+
+### Repeat evaluation to verify no duplicate result is created
+POST {{Hyper_Insurance_HostAddress}}/api/underwriting/evaluate/{{applicationId}}
+Accept: application/json
+
+### Submit a manual underwriting decision for a referred application
+POST {{Hyper_Insurance_HostAddress}}/api/underwriting/review/{{applicationId}}
+Content-Type: application/json
+
+{
+  "decision": "Approved",
+  "reviewedBy": "Underwriter",
+  "reviewNotes": "Reviewed driver and vehicle details."
+}
+
+### List active coverage products and selectable terms
+GET {{Hyper_Insurance_HostAddress}}/api/coverages
+Accept: application/json
+
+###
+
+### List all coverage product configurations, including inactive products
+GET {{Hyper_Insurance_HostAddress}}/api/coverages/configuration
+Accept: application/json
+
+### Create a coverage product with per-coverage limits and deductibles
+POST {{Hyper_Insurance_HostAddress}}/api/coverages
+Content-Type: application/json
+
+{
+  "name": "Collision",
+  "description": "Coverage for collision damage to the insured vehicle.",
+  "isActive": true,
+  "limitOptions": [
+    {
+      "coverageLimit": 25000,
+      "additionalPremium": 180
+    },
+    {
+      "coverageLimit": 50000,
+      "additionalPremium": 260
+    }
+  ],
+  "deductibleOptions": [
+    {
+      "deductible": 500,
+      "premiumAdjustment": 40
+    },
+    {
+      "deductible": 1000,
+      "premiumAdjustment": 0
+    },
+    {
+      "deductible": 2000,
+      "premiumAdjustment": -75
+    }
+  ]
+}
+
+### Update a coverage product's description, activation, terms, and prices
+PUT {{Hyper_Insurance_HostAddress}}/api/coverages/1
+Content-Type: application/json
+
+{
+  "name": "Collision",
+  "description": "Updated collision product terms.",
+  "isActive": true,
+  "limitOptions": [
+    {
+      "coverageLimit": 25000,
+      "additionalPremium": 180
+    },
+    {
+      "coverageLimit": 50000,
+      "additionalPremium": 260
+    }
+  ],
+  "deductibleOptions": [
+    {
+      "deductible": 500,
+      "premiumAdjustment": 40
+    },
+    {
+      "deductible": 1000,
+      "premiumAdjustment": 0
+    },
+    {
+      "deductible": 2000,
+      "premiumAdjustment": -75
+    }
+  ]
+}
+
+### Deactivate a coverage product for new policy selections
+PATCH {{Hyper_Insurance_HostAddress}}/api/coverages/1/activation
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+### Issue a policy with configured coverage terms (application must be approved)
+POST {{Hyper_Insurance_HostAddress}}/api/policies/issue/{{applicationId}}
+Content-Type: application/json
+
+{
+  "coverages": [
+    {
+      "coverageId": 1,
+      "coverageLimit": 50000,
+      "deductible": 1000
+    },
+    {
+      "coverageId": 2,
+      "coverageLimit": 25000,
+      "deductible": 500
+    }
+  ]
+}
+
+### Duplicate selections are rejected
+POST {{Hyper_Insurance_HostAddress}}/api/policies/issue/{{applicationId}}
+Content-Type: application/json
+
+{
+  "coverages": [
+    {
+      "coverageId": 1,
+      "coverageLimit": 25000,
+      "deductible": 1000
+    },
+    {
+      "coverageId": 1,
+      "coverageLimit": 50000,
+      "deductible": 2000
+    }
+  ]
+}
+
+### Unknown coverage IDs or unconfigured terms are rejected
+POST {{Hyper_Insurance_HostAddress}}/api/policies/issue/{{applicationId}}
+Content-Type: application/json
+
+{
+  "coverages": [
+    {
+      "coverageId": 999999,
+      "coverageLimit": 50000,
+      "deductible": 1000
+    }
+  ]
+}
+
+### Get a policy with its coverage details
+GET {{Hyper_Insurance_HostAddress}}/api/policies/{{policyId}}
+Accept: application/json
+
+### Add a configured coverage to an active policy
+POST {{Hyper_Insurance_HostAddress}}/api/policycoverages/policy/{{policyId}}/coverage/1
+Content-Type: application/json
+
+{
+  "coverageLimit": 50000,
+  "deductible": 1000
+}

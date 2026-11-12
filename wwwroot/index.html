@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f8">
+  <meta name="description" content="Hyper Insurance PolicyCenter demonstration workspace">
+  <title>Hyper Insurance | PolicyCenter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Hyper Insurance home">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span class="brand-copy"><strong>hyper</strong><small>INSURANCE</small></span>
+    </a>
+    <div class="workspace-label">WORKSPACE</div>
+    <nav class="navigation" aria-label="Main navigation">
+      <button class="nav-item active" data-view="overview"><span class="nav-icon">◫</span>Overview</button>
+      <button class="nav-item" data-view="customers"><span class="nav-icon">◎</span>Customers</button>
+      <button class="nav-item" data-view="vehicles"><span class="nav-icon">◇</span>Vehicles</button>
+      <button class="nav-item" data-view="applications"><span class="nav-icon">▤</span>Applications</button>
+      <button class="nav-item" data-view="underwriting"><span class="nav-icon">◉</span>Underwriting</button>
+      <button class="nav-item" data-view="policies"><span class="nav-icon">▣</span>Policies</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="guidewire-note"><span class="note-icon">✦</span><div><strong>Product model demo</strong><small>Auto insurance · Canada</small></div></div>
+      <div class="user-profile"><div class="avatar">A</div><div><strong>Admin</strong><small>Insurance team</small></div><span class="profile-more">···</span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="breadcrumbs"><span>Hyper Insurance</span><span class="crumb-slash">/</span><strong id="current-breadcrumb">Overview</strong></div>
+      <div class="topbar-actions"><span class="environment"><i></i> LOCAL ENVIRONMENT</span><button class="icon-button" id="refresh-button" aria-label="Refresh data" title="Refresh data">↻</button></div>
+    </header>
+
+    <div class="page-content">
+      <section class="view-panel active" id="view-overview">
+        <div class="page-heading heading-row">
+          <div><p class="eyebrow">POLICYCENTER · AUTO</p><h1>Good morning, Admin <span class="wave">✦</span></h1><p class="subtitle">Your insurance workspace at a glance.</p></div>
+          <button class="button button-primary" data-go="applications"><span>＋</span> New application</button>
+        </div>
+        <div class="metrics-grid">
+          <article class="metric-card"><div class="metric-label">Total customers<span class="metric-symbol mint">◎</span></div><strong id="metric-customers">—</strong><small>Registered in PolicyCenter</small></article>
+          <article class="metric-card"><div class="metric-label">Applications<span class="metric-symbol violet">▤</span></div><strong id="metric-applications">—</strong><small><span class="dot dot-amber"></span><span id="metric-pending">0</span> awaiting review</small></article>
+          <article class="metric-card"><div class="metric-label">Active policies<span class="metric-symbol blue">▣</span></div><strong id="metric-policies">—</strong><small>Currently in force</small></article>
+          <article class="metric-card"><div class="metric-label">Coverage products<span class="metric-symbol peach">◇</span></div><strong id="metric-coverages">—</strong><small>Available for selection</small></article>
+        </div>
+        <div class="overview-grid">
+          <section class="card recent-card"><div class="card-heading"><div><h2>Recent applications</h2><p>Your latest submissions and decisions</p></div><button class="text-button" data-go="applications">View all <span>→</span></button></div><div id="recent-applications" class="table-wrap"><div class="loading-state">Loading applications…</div></div></section>
+          <section class="card quick-card"><div class="card-heading"><div><h2>Quick actions</h2><p>Get things moving</p></div></div><div class="quick-actions">
+            <button data-go="customers"><span class="quick-icon mint">＋</span><span><strong>Register a customer</strong><small>Add a policyholder profile</small></span><b>→</b></button>
+            <button data-go="vehicles"><span class="quick-icon blue">◇</span><span><strong>Add a vehicle</strong><small>Classify a vehicle for rating</small></span><b>→</b></button>
+            <button data-go="underwriting"><span class="quick-icon violet">◉</span><span><strong>Review applications</strong><small>Evaluate risk and make decisions</small></span><b>→</b></button>
+            <button data-go="policies"><span class="quick-icon peach">▣</span><span><strong>Issue a policy</strong><small>Select coverage and bind a policy</small></span><b>→</b></button>
+          </div></section>
+        </div>
+        <div class="journey-banner"><div class="journey-spark">✦</div><div><span>THE POLICY LIFECYCLE</span><h2>From quote to coverage, all in one place.</h2><p>Register a customer, submit their vehicle, evaluate the risk, then issue a policy with the right coverage.</p></div><div class="journey-steps"><span>01 <b>Customer</b></span><i>→</i><span>02 <b>Application</b></span><i>→</i><span>03 <b>Underwrite</b></span><i>→</i><span>04 <b>Policy</b></span></div></div>
+      </section>
+
+      <section class="view-panel" id="view-customers">
+        <div class="page-heading"><p class="eyebrow">POLICYHOLDERS</p><h1>Customers</h1><p class="subtitle">Create and manage customer profiles.</p></div>
+        <div class="content-grid">
+          <section class="card form-card"><div class="card-heading"><div><h2>Register customer</h2><p>Customer details and driving history</p></div></div>
+            <form id="customer-form" class="form-grid">
+              <label>First name<input name="firstName" required maxlength="100" placeholder="e.g. Alex"></label>
+              <label>Last name<input name="lastName" required maxlength="100" placeholder="e.g. Morgan"></label>
+              <label class="span-2">Email address<input name="email" type="email" required maxlength="254" placeholder="alex@example.com"></label>
+              <label>Years licensed<input name="yearsLicensed" type="number" min="0" max="100" value="5" required></label>
+              <label>Previous accidents<input name="previousAccidents" type="number" min="0" value="0" required></label>
+              <label>Traffic violations<input name="trafficViolations" type="number" min="0" value="0" required></label>
+              <div class="span-2 form-footer"><span>Customer information is stored in this demo database.</span><button class="button button-primary" type="submit">Create customer</button></div>
+            </form>
+          </section>
+          <section class="card list-card"><div class="card-heading"><div><h2>Customer directory</h2><p id="customer-count">All registered customers</p></div><button class="icon-button" data-refresh="customers" aria-label="Refresh customers">↻</button></div><div id="customer-list" class="record-list"><div class="loading-state">Loading customers…</div></div></section>
+        </div>
+      </section>
+
+      <section class="view-panel" id="view-vehicles">
+        <div class="page-heading"><p class="eyebrow">RISK OBJECTS</p><h1>Vehicles</h1><p class="subtitle">Register a vehicle and let the rating model classify it.</p></div>
+        <div class="content-grid">
+          <section class="card form-card"><div class="card-heading"><div><h2>Register vehicle</h2><p>Vehicle value and performance inform risk</p></div></div>
+            <form id="vehicle-form" class="form-grid">
+              <label>Make<input name="make" required maxlength="100" placeholder="e.g. Porsche"></label>
+              <label>Model<input name="model" required maxlength="100" placeholder="e.g. 911"></label>
+              <label>Model year<input name="year" type="number" min="1886" max="2200" required value="2024"></label>
+              <label>Vehicle value (CAD)<input name="value" type="number" min="0.01" step="0.01" required placeholder="85000"></label>
+              <label>Horsepower<input name="horsepower" type="number" min="0" max="10000" required placeholder="379"></label>
+              <div class="span-2 form-footer"><span>Classification is calculated automatically.</span><button class="button button-primary" type="submit">Classify vehicle</button></div>
+            </form>
+          </section>
+          <section class="card list-card"><div class="card-heading"><div><h2>Vehicle inventory</h2><p id="vehicle-count">Registered vehicles</p></div><button class="icon-button" data-refresh="vehicles" aria-label="Refresh vehicles">↻</button></div><div id="vehicle-list" class="record-list"><div class="loading-state">Loading vehicles…</div></div></section>
+        </div>
+      </section>
+
+      <section class="view-panel" id="view-applications">
+        <div class="page-heading"><p class="eyebrow">NEW BUSINESS</p><h1>Applications</h1><p class="subtitle">Create an application and follow it through underwriting.</p></div>
+        <div class="content-grid">
+          <section class="card form-card"><div class="card-heading"><div><h2>Submit application</h2><p>Choose an existing customer and vehicle</p></div></div>
+            <form id="application-form" class="form-grid form-stack">
+              <label class="span-2">Customer<select name="customerId" required id="application-customer"><option value="">Loading customers…</option></select></label>
+              <label class="span-2">Insured vehicle<select name="vehicleId" required id="application-vehicle"><option value="">Loading vehicles…</option></select></label>
+              <label>Vehicle usage<select name="usage" required><option value="Personal">Personal</option><option value="Business">Business</option><option value="Track">Track use</option></select></label>
+              <label>Annual mileage<input name="annualMileage" type="number" min="0" required value="12000"></label>
+              <label class="span-2">Overnight storage<select name="storageType" required><option value="Garage">Garage</option><option value="Outdoor">Outdoor</option></select></label>
+              <div class="span-2 form-footer"><span>Track-use applications are referred for specialist review.</span><button class="button button-primary" type="submit">Submit application</button></div>
+            </form>
+          </section>
+          <section class="card list-card"><div class="card-heading"><div><h2>Application pipeline</h2><p>Current status for every submission</p></div><button class="icon-button" data-refresh="applications" aria-label="Refresh applications">↻</button></div><div id="application-list" class="table-wrap"><div class="loading-state">Loading applications…</div></div></section>
+        </div>
+      </section>
+
+      <section class="view-panel" id="view-underwriting">
+        <div class="page-heading"><p class="eyebrow">RISK & DECISIONS</p><h1>Underwriting</h1><p class="subtitle">Evaluate risk, understand the score, and review referred cases.</p></div>
+        <section class="card table-card"><div class="card-heading"><div><h2>Application review queue</h2><p>Run an evaluation or open the manual review for referrals</p></div><button class="icon-button" data-refresh="underwriting" aria-label="Refresh underwriting queue">↻</button></div><div id="underwriting-list" class="table-wrap"><div class="loading-state">Loading applications…</div></div></section>
+        <section class="card result-card hidden" id="underwriting-result"><div class="card-heading"><div><p class="eyebrow">EVALUATION DETAIL</p><h2 id="result-title">Risk assessment</h2></div><button class="icon-button" id="close-result" aria-label="Close risk assessment">×</button></div><div id="result-content"></div></section>
+        <section class="card manual-review-card hidden" id="manual-review"><div class="card-heading"><div><p class="eyebrow">HUMAN IN THE LOOP</p><h2>Manual underwriting review</h2><p id="review-application-label">Referral review</p></div></div><form id="review-form" class="form-grid">
+          <input type="hidden" name="applicationId">
+          <label>Decision<select name="decision" required><option value="Approved">Approve application</option><option value="Declined">Decline application</option></select></label>
+          <label>Reviewer<input name="reviewedBy" required maxlength="200" placeholder="Your name"></label>
+          <label class="span-2">Review notes<textarea name="reviewNotes" rows="3" required maxlength="2000" placeholder="Summarize your review and reasoning"></textarea></label>
+          <div class="span-2 form-footer"><span>Manual decisions are recorded against the underwriting evaluation.</span><button class="button button-primary" type="submit">Save review decision</button></div>
+        </form></section>
+      </section>
+
+      <section class="view-panel" id="view-policies">
+        <div class="page-heading"><p class="eyebrow">POLICY ADMINISTRATION</p><h1>Policies</h1><p class="subtitle">Quote approved risks, choose coverages, and manage issued policies.</p></div>
+        <section class="card issue-card"><div class="card-heading"><div><h2>Issue a policy</h2><p>Select an approved application and configure each coverage term.</p></div><span class="step-tag">POLICYCENTER · ISSUE</span></div>
+          <form id="issue-form">
+            <div class="issue-topline"><label class="application-picker">Approved application<select name="applicationId" required id="issue-application"><option value="">Loading applications…</option></select></label><div class="quote-preview" id="quote-preview"><span>ESTIMATED ANNUAL PREMIUM</span><strong>Select an application</strong></div></div>
+            <div class="coverage-heading"><div><h3>Coverage selection</h3><p>Limits and deductibles are configured per product.</p></div></div>
+            <div id="coverage-options" class="coverage-options"><div class="loading-state">Loading coverage products…</div></div>
+            <div class="issue-footer"><span>Only approved applications and active coverage products can be issued.</span><button class="button button-primary" type="submit">Issue policy <span>→</span></button></div>
+          </form>
+        </section>
+        <section class="card table-card"><div class="card-heading"><div><h2>Policy book</h2><p>Issued contracts and their current status</p></div><button class="icon-button" data-refresh="policies" aria-label="Refresh policies">↻</button></div><div id="policy-list" class="table-wrap"><div class="loading-state">Loading policies…</div></div></section>
+      </section>
+    </div>
+  </main>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <div class="modal-backdrop hidden" id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><div class="card-heading"><div><p class="eyebrow">POLICY DETAILS</p><h2 id="modal-title">Policy</h2></div><button class="icon-button" id="close-modal" aria-label="Close policy details">×</button></div><div id="modal-content"></div></div></div>
+</body>
+</html>

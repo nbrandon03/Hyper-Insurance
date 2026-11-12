@@ -1,0 +1,11 @@
+[Bb]in/
+[Oo]bj/
+.vs/
+.tsupgrader/
+
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+[Tt]est[Rr]esult*/
